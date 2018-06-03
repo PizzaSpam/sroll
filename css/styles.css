@@ -161,6 +161,6 @@ form input[type=text]:focus{
 	margin-bottom: calc(90vh - 80px);
 }
 
-.content.scroll-controlle > div{
+.content.scroll-controlle div{
 	padding: 10px;
 }
