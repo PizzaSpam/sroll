@@ -1,1 +1,95 @@
-<h1>sRoll simlpe scroll controller</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Twitter Scroller</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	
+	<div class="header">
+		<div class="content">
+			<ul>
+				<li><a href="#">Twitter Scroller</a></li>
+				<li id="search-source">
+					<form action="#" method="get" autocomplete="off">
+						<input type="text" name="q" list="query" id="sys-search" placeholder="Search...">
+					</form>
+				</li>
+				<li><a href="#">Show Feed</a></li>
+				<li><a href="#">Add Episode</a></li>
+				<li><a href="#">Add Serie</a></li>
+				<li><a href="#">Browse Series</a></li>
+			</ul>
+		</div>
+		<form action="#" method="get" class="the-big-one" autocomplete="off">
+			<input type="text" name="q" list="query" value="<?php echo isset($_GET['q']) && !empty($_GET['q']) ? trim($_GET['q']) : ''; ?>" id="sys-search-big" placeholder="Search..." autofocus>
+		</form>
+
+		<datalist id="query"><option value="Adventure"></option><option value="Anime"></option><option value="Animation"></option><option value="Australia"></option><option value="Cartoon"></option><option value="Comedy"></option><option value="Crime"></option><option value="Dc"></option><option value="Drama"></option><option value="Elves"></option><option value="Fake"></option><option value="Fantasy"></option><option value="Gay"></option><option value="Mystery"></option><option value="Homo"></option><option value="Horror"></option><option value="Inhuman"></option><option value="Killer"></option><option value="Marvel"></option><option value="Robots"></option><option value="Sci-fi"></option><option value="Superhero"></option><option value="Timetravel"></option><option value="Tppl"></option><option value="Ttpl"></option><option value="Thriller"></option></datalist>
+	</div>
+
+	<div class="content scroll-controller">
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores id similique dolore molestias non, deleniti, omnis animi doloremque laudantium, assumenda laborum voluptates. Alias veniam, corporis voluptate quod molestias, harum vero.
+    <br>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores id similique dolore molestias non, deleniti, omnis animi doloremque laudantium, assumenda laborum voluptates. Alias veniam, corporis voluptate quod molestias, harum vero.
+    <br>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores id similique dolore molestias non, deleniti, omnis animi doloremque laudantium, assumenda laborum voluptates. Alias veniam, corporis voluptate quod molestias, harum vero.
+	</div>
+
+	<script src="js/jquery-1.11.3.min.js"></script>
+	<script src="js/jquery.sroll-0-1.js"></script>
+	<script>
+		let searchLeft = $('#sys-search').offset().left;
+		$('.header').sRoll({
+			startClass: 'test69',
+			onMinHeight: function () {
+				searchLeft = $('#sys-search').offset().left;
+				$('.the-big-one').css({
+					'width': '600px',
+					'margin': '0px',
+					'left': searchLeft+'px',
+					'right': 'none'
+				});
+				if ( $('#sys-search-big:focus').is(':focus') ) {
+					$('#sys-search').focus();
+				}
+				$('#sys-search').val($('#sys-search-big').val());
+			},
+			offMinHeight: function () {
+				$('.the-big-one').attr('style', '');
+				//$('#sys-search:focus')
+				if ( $('#sys-search:focus').is(':focus') ) {
+					$('#sys-search').focusout();
+					$('#sys-search-big').focus();
+				}
+			},
+			onUpdate: function () {
+				$('.the-big-one').attr('style', '');
+			},
+			onReach: function () {
+				$(this).addClass('reached');
+			},
+			offReach: function () {
+				$(this).removeClass('reached');
+			}
+		});
+
+		let s = 0;
+		if ( $('#sys-search').val().length > 0 || $('#sys-search-big').val().length > 0 ) {
+			let value = $('#sys-search').val().length > 0 ? $('#sys-search').val() : ($('#sys-search-big').val().length > 0 ? $('#sys-search-big').val() : '');
+			$('.header').addClass('test69');
+			$('#sys-search').val(value);
+			$('#sys-search-big').val(value);
+		}
+		$('#sys-search, #sys-search-big').on('keyup', function (e) {
+			if ( !s ) {
+				$('.header').addClass('test69');
+				s++;
+			}
+			$('#sys-search').val( $(this).val() );
+			$('#sys-search-big').val( $(this).val() );
+		});
+	</script>
+</body>
+</html>
